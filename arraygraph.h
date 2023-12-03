@@ -4,9 +4,6 @@
 #include "graph.h" 
 #include "arraystack.h"
 #include "arrayqueue.h"
-#include <iostream>
-
-using namespace std;
 
 template <class T>
 class ArrayGraph : public GraphInterface<T>
