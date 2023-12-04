@@ -4,7 +4,7 @@ Purpose: Implement the arraystack class.
 Date: 12/3/2023
 */
 
-#include "arrayStack.h"
+#include "arraystack.h"
 
 template<class ItemType>
 ArrayStack<ItemType>::ArrayStack()
