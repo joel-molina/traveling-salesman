@@ -205,7 +205,8 @@ int ArrayGraph<T>::getEdgeWeight(T start, T end) const
     }
     else
     {
-        throw "There is no edge.";
+        return __INT_MAX__;
+        //throw "There is no edge.";
         //cout << "There is no edge." << endl;
         //return -1;
     }

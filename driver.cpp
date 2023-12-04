@@ -1,13 +1,11 @@
 #include "arraygraph.h"
 #include <iostream>
 #include <fstream>
-#include <algorithm>
-#include <sstream>
 using namespace std;
 
 
 void write(string&);
-void generatePermutations(int, string*, int, string*);
+void generatePermutations(string, string*, int, int);
 int factorial(int);
 
 int main()
@@ -18,7 +16,15 @@ int main()
     string city1, city2;
     float miles;
 
-
+    //Clear paths file.
+    fstream fout;
+    fout.open("paths.txt", ios::out);
+    if(fout.fail())
+    {
+        cout << "File not found.";
+    }
+    fout.close();
+    
     //Load data from file
     fstream fin;
     fin.open("map.txt");
@@ -58,96 +64,77 @@ int main()
     }
     fin.close();
 
-    //Start city is Reno.
-    int startPos;
-    for(int i=0; i<numberOfCities; i++)
+    //Generate the path permutations.
+    string startCity = "Reno";
+    int theIndex = 0; //Always 0 to do all permutations.
+
+    generatePermutations(startCity, cities, numberOfCities, theIndex);
+
+    //Add permutations' elements to array.    
+    int numPaths = factorial(numberOfCities-1); //Path size
+    int permElements = (numPaths * numberOfCities) + numPaths;
+    string permutations[permElements]; //Elements in all paths. Need to be individual to get edgeweights.
+    for(int i=0; i<numPaths; i++)
     {
-        if(cities[i] == "Reno")
+        permutations[i] = "";
+    }
+
+    fin.open("paths.txt");
+    int tempI = 0;
+    while(fin >> city1)
+    {
+        permutations[tempI] = city1;
+        tempI++;
+    }
+    fin.close();
+
+    //Put elements into a paths array
+    string paths[numPaths];
+    fin.open("paths.txt");
+    int tempI2 = 0;
+    while(getline(fin, paths[tempI2]))
+    {
+        tempI2++;
+    }
+    fin.close();
+    permutations[0] = startCity;
+
+    //Use permutations array to get edgeweights and remove invalid paths in paths array.
+    string departure, arrival;
+    int edge = 0;
+    int t = 0;
+    for(int i=0; i<permElements; i++)
+    {
+        departure = permutations[i];
+        arrival = permutations[i+1];
+        edge = graph.getEdgeWeight(departure, arrival);
+
+        if(edge == __INT_MAX__ && arrival != departure)
         {
-            startPos = i;
+            paths[t] = "invalid";    
+        }
+        
+        if(i % 6 == 0 && i != 0)
+        {
+            t++;
         }
     }
-    startPos = 0; //Change this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Find all paths
-    int paths = factorial(numberOfCities-1);
-    string permutations[300];
-    generatePermutations(startPos, cities, numberOfCities, permutations);
 
-    //Write paths to file.
-    fstream fout;
-
-    fout.open("paths.txt");
-    if(fout.fail())
+    //Write valid paths to file
+    fout.open("paths.txt", ios::out);
+    for(int i=0; i<numPaths; i++)
     {
-        cout << "File not found.";
+        if(paths[i] != "invalid")
+        {
+            fout << paths[i] << endl;
+        }
     }
-
-    for(int i=0; i<paths; i++)
-    {
-        fout << permutations[i] << endl;
-    }   
     fout.close();
 
-    //Parse permutations array into single elements.
-    /*
-    int place = 0;
-    int amount = paths * (numberOfCities+1); 
-    string parsedPaths[144]; //Amount of singular elements in the array
-
-    for (int i=0; i<paths; i++)
-    {
-        stringstream ss(permutations[i]);
-        string target;
-
-        while(getline(ss, target, ','))
-        {
-            parsedPaths[place] = target;
-            place++;
-        }
-    }
-
-    //With single elements get edgeweight and compare paths to get best one.
-    
-    for(int i=0; i<amount; i++)
-    {
-        cout << parsedPaths[i];
-    }
-    
-
-    int cheapestPrice = __INT_MAX__;
-    int indexCheapest = 0;
-    int currentPrice = 0;
-    string source, destination;
-    for(int i=0; i<amount; i++)
-    {
-        try
-        {
-            if(i < amount-1)
-            {
-                string source = parsedPaths[i];
-                string destination = parsedPaths[i+1];
-                //cout << source << " ??? " << endl;
-                //cout << destination << endl;
-            }
-            if(source != destination) //Dont compare end of last path to start of next path.
-            {
-                cout << "TEST" << endl;
-                currentPrice += graph.getEdgeWeight(source, destination);
-                cout << currentPrice << endl;
-                if(currentPrice < cheapestPrice)
-                {
-                    cheapestPrice = currentPrice;
-                    indexCheapest++;
-                }
-            }
-        }
-        catch(int edgeWeight)
-        {
-            cout << "NO";
-        }
-    }
+    //Find the best path
 
     //Write out the best path
+    /*
     fout.open("paths.txt", ios::app);
     if(fout.fail())
     {
@@ -155,7 +142,7 @@ int main()
     }
 
     fout << "\nBest Path: " << endl;
-    fout << permutations[indexCheapest] << endl;
+    fout << "path";
     fout << cheapestPrice;
     */
 }
@@ -177,72 +164,43 @@ int factorial(int numCities)
     }
 }
 
-
-void generatePermutations(int index, string* cities, int numCities, string* paths)
+void generatePermutations(string start, string* cities, int numCities, int index)
 {
-    //start == index
+    //Base case
     if (index == numCities - 1) 
     {
-        for(int i=0; i<numCities; i++)
+        //Starting city could be anything so based on input. Here, want to start in Reno.
+        if(cities[0] == start)
         {
-            paths[index * numCities + i] = cities[i];
+            fstream fout;
+            fout.open("paths.txt", ios::app);
+
+            for(int i=0; i<numCities; i++)
+            {
+                
+                fout << cities[i] + " ";
+            }
+            fout << "Reno" << endl;
+            fout.close();
         }
-        cout << endl;
         return;
     }
-
-    for (int i=index; i<numCities; ++i) 
+    else
     {
-        string temp = cities[index];
-        cities[index] = cities[i];
-        cities[i] = temp;
-
-        generatePermutations(index+1, cities, numCities, paths);
-
-        temp = cities[index];
-        cities[index] = cities[i];
-        cities[i] = temp;
-    }
-}
-/*
-void generatePermutations(int start, string* cities, int numCities, string* paths, int numPaths)
-{
-    // Generating and writing permutations 
-    sort(cities, cities + numCities);
-    int index = 0;
-    while (next_permutation(cities, cities + numCities))
-    {
-        bool flag = false;
-        for (int i = 0; i <= numCities; i++) 
+        for (int i=index; i<numCities; i++) 
         {
-            //Only writes to the permutations array if starts with Reno since that is a valid path.
-            if(cities[0] == "Reno")
-            {
-                if(i != 0 && (cities[i] == "Seattle" && cities[i-1] != "LasVegas") && (cities[i] == "LasVegas" && cities[i-1] != "Seattle"))
-                {
-                    if((cities[i] == "SanFrancisco" && cities[i-1] != "SaltLakeCity") && (cities[i] == "SaltLakeCity" && cities[i-1] != "SanFrancisco")) 
-                    {
-                        flag = true;
-                        paths[index] = paths[index] + cities[i];
-                        if (i < numCities) 
-                        {
-                            paths[index] = paths[index] + " ";
-                        }
-                        /*
-                        if(i == numCities)
-                        {
-                            paths[index] = paths[index] + "Reno";
-                        }
-                        
-                    } 
-                }
-                
-            }
+            //Swap with all elements
+            string temp = cities[index];
+            cities[index] = cities[i];
+            cities[i] = temp;
+
+            ///Get permutations after the current affixed value
+            generatePermutations(start, cities, numCities, index+1);
+            
+            //Backtrack
+            temp = cities[index];
+            cities[index] = cities[i];
+            cities[i] = temp;
         }
-        if(flag)
-        {
-            index++;
-        }
-    
+    }   
 }
-*/
