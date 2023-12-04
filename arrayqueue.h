@@ -34,5 +34,5 @@ class ArrayQueue : public QueueInterface<T>
         bool dequeue(); 
         T peekFront() const; 
 };
-#include "arrayQueue.cpp"
+#include "arrayqueue.cpp"
 #endif
