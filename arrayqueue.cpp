@@ -1,3 +1,9 @@
+/*
+Author: Joel Molina 
+Purpose: Implementation of the arrayqueue class.
+Date: 12/3/2023
+*/
+
 #include "arrayQueue.h"
 
 template <typename T>

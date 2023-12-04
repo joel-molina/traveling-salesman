@@ -1,3 +1,9 @@
+/*
+Author: Joel Molina 
+Purpose: Implement the arraystack class.
+Date: 12/3/2023
+*/
+
 #include "arrayStack.h"
 
 template<class ItemType>

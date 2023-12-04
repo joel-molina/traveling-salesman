@@ -1,3 +1,9 @@
+/*
+Author: Joel Molina 
+Purpose: Implement the array Graph class.
+Date: 12/3/2023
+*/
+
 #include "arraygraph.h"
 
 template <typename T>

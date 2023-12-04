@@ -1,3 +1,9 @@
+/*
+Author: Joel Molina 
+Purpose: Templated interface for a queue.
+Date: 12/3/2023
+*/
+
 #ifndef QUEUE_INTERFACE 
 #define QUEUE_INTERFACE 
 

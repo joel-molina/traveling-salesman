@@ -1,3 +1,9 @@
+/*
+Author: Joel Molina 
+Purpose: Define the attributes and behaviors of the arraygraph class.
+Date: 12/3/2023
+*/
+
 #ifndef ARRAYGRAPH_H
 #define ARRAYGRAPH_H
 

@@ -1,3 +1,9 @@
+/*
+Author: Joel Molina 
+Purpose: Solve the traveling salesman problem using the brute force method.
+Date: 12/3/2023
+*/
+
 #include "arraygraph.h"
 #include <iostream>
 #include <fstream>
@@ -131,20 +137,87 @@ int main()
     }
     fout.close();
 
-    //Find the best path
+    //Update paths array
+    fin.open("paths.txt");
+    tempI = 0;
 
-    //Write out the best path
-    /*
-    fout.open("paths.txt", ios::app);
-    if(fout.fail())
+    for(int i=0; i<numPaths; i++)
     {
-        cout << "File not found.";
+        paths[i] = "invalid";
     }
 
-    fout << "\nBest Path: " << endl;
-    fout << "path";
-    fout << cheapestPrice;
-    */
+    while(getline(fin, paths[tempI]))
+    {
+        tempI++;
+    }
+    fin.close();
+
+    for(int i=0; i<numPaths; i++)
+    {
+        //clean up if theres any whitespace
+        if(paths[i] == "")
+        {
+            paths[i] = "invalid";
+        }
+    }
+
+    //update elements array.    
+    fin.open("paths.txt");
+    tempI = 0;
+
+    for(int i=0; i<permElements; i++)
+    {
+        permutations[i] = "empty";
+    }
+
+    while(fin >> city1)
+    {
+        permutations[tempI] = city1;
+        tempI++;
+    }
+    fin.close();
+
+    //Find the best path with updated array.
+    float cheapest = __INT_MAX__;
+    int cost = 0;
+    edge = 0;
+    t = 0;
+    int resultT;
+    for(int i=0; i<tempI-1; i++)
+    {
+        //So that edges of empty spaces arent checked.
+        departure = permutations[i];
+        arrival = permutations[i+1];
+        edge = graph.getEdgeWeight(departure, arrival);
+
+        if(arrival != departure)
+        {
+            cost += edge;
+        }
+
+        if((i + 1) % 6 == 0 && i != 0)
+        {
+            if(cost < cheapest)
+            {
+                cheapest = cost;
+                cost = 0;
+                resultT = t;
+            }
+        }
+
+        if((i+1) % 6 == 0 && i != 0)
+        {
+            t++;
+        }   
+        
+    }
+    //Write out the best path
+    
+    fout.open("paths.txt", ios::app);
+
+    fout << "\nBest Path: " << paths[resultT] << endl;
+    fout << "Cost: " << cheapest/40;
+    fout.close();
 }
 
 void write(string& value)

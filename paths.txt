@@ -6,3 +6,6 @@ Reno LasVegas SaltLakeCity Seattle SanFrancisco Reno
 Reno LasVegas SanFrancisco Seattle SaltLakeCity Reno
 Reno Seattle SaltLakeCity LasVegas SanFrancisco Reno
 Reno Seattle SanFrancisco LasVegas SaltLakeCity Reno
+
+Best Path: Reno SanFrancisco Seattle SaltLakeCity LasVegas Reno
+Cost: 67.875
