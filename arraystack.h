@@ -27,5 +27,5 @@ class ArrayStack: public StackInterface<ItemType>
         ~ArrayStack() {}
 };
 
-#include "arrayStack.cpp"
+#include "arraystack.cpp"
 #endif
