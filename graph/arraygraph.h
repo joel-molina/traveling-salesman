@@ -1,15 +1,11 @@
-/*
-Author: Joel Molina 
-Purpose: Define the attributes and behaviors of the arraygraph class.
-Date: 12/3/2023
-*/
+//Graph header
 
 #ifndef ARRAYGRAPH_H
 #define ARRAYGRAPH_H
 
 #include "graph.h" 
-#include "arraystack.h"
-#include "arrayqueue.h"
+#include "../stack/arraystack.h"
+#include "../queue/arrayqueue.h"
 
 template <class T>
 class ArrayGraph : public GraphInterface<T>

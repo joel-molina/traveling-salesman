@@ -1,8 +1,4 @@
-/*
-Author: Joel Molina 
-Purpose: Define the attributes and behaviors of the arraystack class.
-Date: 12/3/2023
-*/
+//Stack header
 
 #ifndef ARRAY_STACK
 #define ARRAY_STACK

@@ -1,9 +1,4 @@
-/*
-Author: Joel Molina 
-Purpose: Define the attributes and behaviors of the arrayqueue class.
-Date: 12/3/2023
-*/
-
+//Queue header
 #ifndef ARRAYQUEUE_H
 #define ARRAYQUEUE_H
 

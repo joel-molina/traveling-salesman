@@ -1,8 +1,4 @@
-/*
-Author: Joel Molina 
-Purpose: Templated interface for a queue.
-Date: 12/3/2023
-*/
+//Queue DS
 
 #ifndef QUEUE_INTERFACE 
 #define QUEUE_INTERFACE 

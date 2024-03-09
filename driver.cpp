@@ -1,10 +1,8 @@
-/*
-Author: Joel Molina 
-Purpose: Solve the traveling salesman problem using the brute force method.
-Date: 12/3/2023
-*/
+//Author: Joel Molina
+//Purpose: Solve the traveling salesman problem using the brute force method.
+//Date: Fall 2023
 
-#include "arraygraph.h"
+#include "graph/arraygraph.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -16,24 +14,25 @@ int factorial(int);
 
 int main()
 {
+    //Declarations
     ArrayGraph<string> graph;
     int numberOfCities = 5;
     string cities[numberOfCities];
     string city1, city2;
     float miles;
 
-    //Clear paths file.
+    //Clear output file.
     fstream fout;
-    fout.open("paths.txt", ios::out);
+    fout.open("sample_data/output.txt", ios::out);
     if(fout.fail())
     {
         cout << "File not found.";
     }
     fout.close();
     
-    //Load data from file
+    //Load data from input file
     fstream fin;
-    fin.open("map.txt");
+    fin.open("sample_data/input.txt");
     if(fin.fail())
     {
         cout << "File not found.";
@@ -85,7 +84,7 @@ int main()
         permutations[i] = "";
     }
 
-    fin.open("paths.txt");
+    fin.open("sample_data/output.txt");
     int tempI = 0;
     while(fin >> city1)
     {
@@ -96,7 +95,7 @@ int main()
 
     //Put elements into a paths array
     string paths[numPaths];
-    fin.open("paths.txt");
+    fin.open("sample_data/output.txt");
     int tempI2 = 0;
     while(getline(fin, paths[tempI2]))
     {
@@ -127,7 +126,7 @@ int main()
     }
 
     //Write valid paths to file
-    fout.open("paths.txt", ios::out);
+    fout.open("sample_data/output.txt", ios::out);
     for(int i=0; i<numPaths; i++)
     {
         if(paths[i] != "invalid")
@@ -138,7 +137,7 @@ int main()
     fout.close();
 
     //Update paths array
-    fin.open("paths.txt");
+    fin.open("sample_data/output.txt");
     tempI = 0;
 
     for(int i=0; i<numPaths; i++)
@@ -162,7 +161,7 @@ int main()
     }
 
     //update elements array.    
-    fin.open("paths.txt");
+    fin.open("sample_data/output.txt");
     tempI = 0;
 
     for(int i=0; i<permElements; i++)
@@ -213,7 +212,7 @@ int main()
     }
     //Write out the best path
     
-    fout.open("paths.txt", ios::app);
+    fout.open("sample_data/output.txt", ios::app);
 
     fout << "\nBest Path: " << paths[resultT] << endl;
     fout << "Cost: " << cheapest/40;
@@ -246,14 +245,14 @@ void generatePermutations(string start, string* cities, int numCities, int index
         if(cities[0] == start)
         {
             fstream fout;
-            fout.open("paths.txt", ios::app);
+            fout.open("sample_data/output.txt", ios::app);
 
             for(int i=0; i<numCities; i++)
             {
                 
                 fout << cities[i] + " ";
             }
-            fout << "Reno" << endl;
+            fout << start << endl; //Appends start city to end of each path.
             fout.close();
         }
         return;

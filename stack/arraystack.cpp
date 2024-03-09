@@ -1,8 +1,4 @@
-/*
-Author: Joel Molina 
-Purpose: Implement the arraystack class.
-Date: 12/3/2023
-*/
+//Stack Implementation
 
 #include "arraystack.h"
 

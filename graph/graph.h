@@ -1,8 +1,11 @@
+//Graph DS
+
 #ifndef GRAPH_INTERFACE
 #define GRAPH_INTERFACE
 
 template<class LabelType>
-class GraphInterface{
+class GraphInterface
+{
 public:
     virtual int getNumVertices() const = 0;
     virtual int getNumEdges() const = 0;

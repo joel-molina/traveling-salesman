@@ -1,8 +1,4 @@
-/*
-Author: Joel Molina 
-Purpose: Implement the array Graph class.
-Date: 12/3/2023
-*/
+//Graph implementation
 
 #include "arraygraph.h"
 

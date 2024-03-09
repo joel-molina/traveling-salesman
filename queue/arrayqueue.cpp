@@ -1,8 +1,4 @@
-/*
-Author: Joel Molina 
-Purpose: Implementation of the arrayqueue class.
-Date: 12/3/2023
-*/
+//Queue implementation
 
 #include "arrayqueue.h"
 
