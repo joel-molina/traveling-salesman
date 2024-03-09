@@ -7,4 +7,3 @@
 - All "valid" paths are shown. Valid meaning there is a path that starts and ends at the correct city.
 - The best path is the one with the lowest weighted sums on its path.
 - The "cost" in this instance is measured with a fixed fuel efficiency of 40mpg.
-g
